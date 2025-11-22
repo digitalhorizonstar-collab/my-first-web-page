@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>个人简历 - 示例</title>
+  <style>
+    :root{
+      --bg:#e9f6ff;     /* 更柔和的浅蓝背景 */
+      --card:#ffffff;
+      --muted:#556064;
+      --accent:#d93b3b; /* 暖红作强调色 */
+      --lead:#103b2b;
+      --gap:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial}
+    body{background:var(--bg);color:#122;line-height:1.6;padding:28px}
+    .wrap{max-width:920px;margin:0 auto}
+
+    /* Header */
+    header.title{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    header.title h1{margin:0;font-size:26px;color:var(--lead);letter-spacing:0.2px}
+    header.title p{margin:0;color:var(--muted);font-size:14px}
+
+    /* Download 按钮右上 */
+    .download-btn{appearance:none;border:1px solid rgba(217,59,59,0.18);background:rgba(217,59,59,0.12);color:var(--accent);padding:8px 12px;border-radius:999px;cursor:pointer;font-weight:700}
+    .download-btn:hover{background:#efefef;color:var(--accent)}
+
+    .card{background:var(--card);border-radius:14px;padding:22px;margin-top:18px;box-shadow:0 10px 30px rgba(20,36,18,0.06)}
+    .profile{display:flex;gap:var(--gap);align-items:center}
+    .left{flex:1}
+    .right{width:150px;flex:0 0 150px}
+    .avatar{width:150px;height:150px;border-radius:16px;object-fit:cover;border:4px solid rgba(16,59,43,0.06)}
+
+    .meta{display:flex;flex-direction:column;gap:6px}
+    .name{font-size:20px;font-weight:800;color:var(--lead)}
+    .info{color:var(--muted);font-size:14px}
+
+    /* 内容区 */
+    section{margin-top:20px}
+    section h2{margin:0 0 12px 0;font-size:17px;color:var(--lead);border-left:4px solid rgba(16,59,43,0.06);padding-left:10px}
+    .item{padding:12px;border-radius:10px;border:1px solid #eef6f4;background:linear-gradient(180deg,#fff,#fcfffb);margin-bottom:12px}
+    .item .subtitle{color:var(--muted);font-size:13px;margin-bottom:8px}
+    .item p{margin:0;color:#213}
+
+    /* 辅助样式：时间轴小点 */
+    .subtitle small{color:var(--muted);margin-left:8px}
+
+    /* responsive */
+    @media(max-width:720px){
+      .profile{flex-direction:column;align-items:flex-start}
+      .right{width:100%;flex:0 0 auto}
+      .avatar{width:120px;height:120px;border-radius:12px}
+      header.title{flex-direction:column;align-items:flex-start;gap:8px}
+    }
+
+    /* 打印样式（简洁） */
+    @media print{
+      body{padding:0}
+      .download-btn{display:none}
+      .card{box-shadow:none;border-radius:0}
+    }
+    /* 红色方块玻璃表单容器 */
+    .glass-form{
+      margin:28px auto 80px;padding:18px;border-radius:12px;max-width:920px;background:rgba(217,59,59,0.10);
+      border:1px solid rgba(217,59,59,0.16);backdrop-filter:blur(6px);box-shadow:0 8px 30px rgba(217,59,59,0.06);
+    }
+    .glass-form h3{margin:0 0 12px 0;color:var(--lead)}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .form-row{display:flex;flex-direction:column;gap:6px}
+    .form-row label{font-size:13px;color:var(--muted)}
+    .form-row input,.form-row textarea{padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);font-size:14px}
+    .form-row textarea{resize:vertical;min-height:80px}
+
+    /* 液态玻璃紫色提交按钮 */
+    .liquid-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;border-radius:999px;border:1px solid rgba(123,92,255,0.18);background:rgba(123,92,255,0.12);color:#6f43ff;font-weight:800;cursor:pointer;overflow:hidden}
+    .liquid-btn::before{content:'';position:absolute;left:-40%;top:-40%;width:180%;height:180%;background:radial-gradient(closest-side, rgba(140,110,255,0.28), rgba(110,80,255,0.08) 40%, transparent 60%);transform:translate3d(0,0,0);transition:transform .9s cubic-bezier(.2,.9,.3,1),opacity .6s}
+    .liquid-btn:hover::before{transform:translate3d(20%,20%,0)}
+    .liquid-btn:active{transform:translateY(1px);opacity:0.95}
+
+    .form-actions{margin-top:12px;display:flex;justify-content:flex-end}
+
+    @media(max-width:720px){
+      .form-grid{grid-template-columns:1fr}
+    }
+    /* 雪花开关按钮（固定在底部中央） */
+    .snow-toggle-btn{
+      position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:10001;cursor:pointer;
+      padding:8px 14px;border-radius:999px;background:rgba(255,255,255,0.95);border:1px solid rgba(16,24,20,0.06);
+      box-shadow:0 6px 18px rgba(16,24,20,0.06);font-weight:700;color:#264;display:flex;gap:8px;align-items:center}
+    .snow-toggle-btn.active{background:rgba(217,59,59,0.12);border-color:rgba(217,59,59,0.18);color:var(--accent)}
+    @media print{ .snow-toggle-btn{display:none} }
+  </style>
+  /* 雪花样式 */
+  <style>
+    #snow{position:fixed;left:0;top:0;right:0;bottom:0;pointer-events:none;z-index:9999;overflow:hidden}
+    .snowflake{position:absolute;top:-10vh;color:#ffffff;font-size:14px;opacity:0.95;filter:drop-shadow(0 1px 1px rgba(0,0,0,0.25));will-change:transform,opacity}
+    .snowflake .sway{display:inline-block}
+    .snowflake{animation: fall var(--fall-duration,10s) linear var(--delay,0s) infinite}
+    .snowflake .sway{animation: sway var(--sway-duration,4s) ease-in-out var(--delay,0s) infinite alternate}
+
+    @keyframes fall{
+      0%{transform:translateY(-12vh);opacity:0}
+      10%{opacity:1}
+      100%{transform:translateY(110vh);opacity:0}
+    }
+    @keyframes sway{
+      0%{transform:translateX(-10px)}
+      50%{transform:translateX(10px)}
+      100%{transform:translateX(-10px)}
+    }
+  </style>
+</head>
+<body>
+  <div id="snow" aria-hidden="true"></div>
+  <div class="wrap">
+    <header class="title">
+      <div>
+        <h1>个人简历</h1>
+        <p class="info">简洁模板 · 可直接编辑替换内容</p>
+      </div>
+      <button class="download-btn" id="download-pdf">下载 PDF</button>
+    </header>
+
+    <div class="card">
+      <div class="profile">
+        <div class="left">
+          <div class="meta">
+              <div class="name">张三（示例）</div>
+              <div class="info">学校邮箱：zhangsan@school.edu.cn</div>
+              <div class="info">电话：+86 138 0000 0000</div>
+          </div>
+        </div>
+        <div class="right">
+          <!-- 占位图位于 assets/screenshot.svg（150x150） -->
+          <img class="avatar" src="assets/screenshot.svg" alt="头像" onerror="this.src='https://via.placeholder.com/150x150.png?text=头像'">
+        </div>
+      </div>
+
+      <section>
+        <h2>工作经历</h2>
+        <article class="item">
+          <div class="subtitle">产品经理 · 某科技公司（2022.06 — 至今）</div>
+          <p>负责移动端产品规划与需求管理，推动跨部门项目落地，参与 A/B 测试与数据分析，提升用户留存率。</p>
+        </article>
+        <article class="item">
+          <div class="subtitle">实习生 · XX 公司（2021.07 — 2021.12）</div>
+          <p>参与需求调研与竞品分析，协助产品迭代与文档撰写。</p>
+        </article>
+      </section>
+
+      <section>
+        <h2>校园经历</h2>
+        <article class="item">
+          <div class="subtitle">学生会 项目负责人（2019 — 2021）</div>
+          <p>组织校园活动、协调志愿者团队，策划并执行大型宣讲与招新活动。</p>
+        </article>
+        <article class="item">
+          <div class="subtitle">课程项目：智能推荐系统</div>
+          <p>带领小组完成毕业设计，负责推荐算法的实现与性能优化。</p>
+        </article>
+      </section>
+
+      <section>
+        <h2>个人总结</h2>
+        <article class="item">
+          <p>积极上进，善于沟通与协调，具有较强的学习能力和团队协作精神。希望在产品/技术方向持续成长，参与有挑战性的项目。</p>
+        </article>
+      </section>
+    </div>
+  </div>
+  <!-- 雪花开关 -->
+  <button id="snow-toggle-btn" class="snow-toggle-btn" aria-pressed="true">❄ 雪花：开</button>
+
+  <!-- 联系表单（红色方块玻璃包围） -->
+  <div class="glass-form" aria-labelledby="contact-title">
+    <h3 id="contact-title">联系我</h3>
+    <form id="contact-form">
+      <div class="form-grid">
+        <div class="form-row">
+          <label for="name">姓名</label>
+          <input id="name" name="name" type="text" placeholder="请输入姓名" required>
+        </div>
+        <div class="form-row">
+          <label for="email">邮箱</label>
+          <input id="email" name="email" type="email" placeholder="example@school.edu.cn" required>
+        </div>
+        <div class="form-row">
+          <label for="phone">电话</label>
+          <input id="phone" name="phone" type="tel" placeholder="+86 138 ...">
+        </div>
+        <div class="form-row">
+          <label for="address">地址</label>
+          <input id="address" name="address" type="text" placeholder="所在地址">
+        </div>
+        <div class="form-row" style="grid-column:1 / -1">
+          <label for="message">留言（可选）</label>
+          <textarea id="message" name="message" placeholder="可填写补充信息"></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="liquid-btn" type="submit">提交</button>
+      </div>
+    </form>
+  </div>
+  <script>
+    // 下载按钮示例：目前仅作提示
+    document.getElementById('download-pdf').addEventListener('click', function(e){
+      e.preventDefault();
+      alert('下载功能后续可用：将导出为 PDF');
+    });
+  </script>
+  <script>
+    // 雪花生成脚本：页面加载时创建若干雪花并循环播放
+    (function(){
+      const snowContainer = document.getElementById('snow');
+      if(!snowContainer) return;
+      const maxFlakes = 40; // 雪花数量，可调
+
+      function rand(min, max){ return Math.random() * (max - min) + min }
+
+      for(let i=0;i<maxFlakes;i++){
+        const flake = document.createElement('div');
+        flake.className = 'snowflake';
+        const inner = document.createElement('span');
+        inner.className = 'sway';
+        inner.textContent = '❄';
+        flake.appendChild(inner);
+
+        // 随机位置与样式
+        const left = rand(0, window.innerWidth);
+        const size = Math.round(rand(10, 22));
+        const fallDuration = rand(6, 14).toFixed(2) + 's';
+        const swayDuration = rand(3, 6).toFixed(2) + 's';
+        const delay = '-' + rand(0, 14).toFixed(2) + 's'; // negative delay to spread flakes
+
+        flake.style.left = left + 'px';
+        flake.style.fontSize = size + 'px';
+        flake.style.setProperty('--fall-duration', fallDuration);
+        flake.style.setProperty('--sway-duration', swayDuration);
+        flake.style.setProperty('--delay', delay);
+
+        // slight opacity variation
+        flake.style.opacity = (rand(0.55, 1)).toFixed(2);
+
+        snowContainer.appendChild(flake);
+      }
+
+      // 当窗口大小变化时，简短更新雪花位置边界（不重建）
+      window.addEventListener('resize', ()=>{
+        const flakes = snowContainer.querySelectorAll('.snowflake');
+        flakes.forEach(f => {
+          const left = Math.min(parseFloat(f.style.left), window.innerWidth - 10);
+          f.style.left = left + 'px';
+        });
+      });
+    })();
+  </script>
+  <script>
+    // 雪花开关逻辑：切换显示/隐藏雪花容器，更新按钮状态
+    (function(){
+      const snowContainer = document.getElementById('snow');
+      const btn = document.getElementById('snow-toggle-btn');
+      if(!btn || !snowContainer) return;
+
+      let enabled = true; // 默认开启
+      function setEnabled(v){
+        enabled = !!v;
+        snowContainer.style.display = enabled ? 'block' : 'none';
+        btn.classList.toggle('active', enabled);
+        btn.setAttribute('aria-pressed', String(enabled));
+        btn.textContent = enabled ? '❄ 雪花：开' : '❄ 雪花：关';
+      }
+      // 初始化
+      setEnabled(true);
+
+      btn.addEventListener('click', ()=> setEnabled(!enabled));
+    })();
+  </script>
+  <script>
+    // 表单提交处理：阻止默认提交并显示提示
+    (function(){
+      const form = document.getElementById('contact-form');
+      if(!form) return;
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        // 这里可以收集表单数据并发送到后端，当前仅显示提示
+        alert('您的信息已提交');
+        form.reset();
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150">
+  <rect width="100%" height="100%" fill="#e0f2ff" rx="12"/>
+  <g transform="translate(12,18)">
+    <circle cx="56" cy="44" r="30" fill="#cfeeff" stroke="#b6e0ff" stroke-width="2"/>
+    <rect x="0" y="94" width="108" height="10" rx="5" fill="#cfeeff"/>
+    <text x="54" y="126" font-size="10" fill="#6b8ca6" text-anchor="middle" font-family="Arial, Helvetica, sans-serif">屏幕截图</text>
+  </g>
+</svg>
