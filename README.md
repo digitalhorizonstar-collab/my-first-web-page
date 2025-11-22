@@ -1,2 +1,1 @@
-# my-first-web-page
-练习
+# My First Git Repository
